@@ -62,14 +62,15 @@ class home
         $this->load->view("user");
         $this->load->view("lichsu");
     }
-    public function don()
+
+    public function doi()
     {
-        $this->load->view1("admin/header");
-
-        $this->load->view1("admin/donhang");
-
-        $this->load->view1("admin/footer");
+        $this->load->view("header");
+        $this->load->view("user");
+        $this->load->view("doi");
+        $this->load->view("footer");
     }
+    
     public function chitiet()
     {
         $xem["voucher"] = $this->db->query("select * from  voucher");
