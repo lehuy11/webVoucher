@@ -62,7 +62,14 @@ class home
         $this->load->view("user");
         $this->load->view("lichsu");
     }
-    
+    public function don()
+    {
+        $this->load->view1("admin/header");
+
+        $this->load->view1("admin/donhang");
+
+        $this->load->view1("admin/footer");
+    }
     public function chitiet()
     {
         $xem["voucher"] = $this->db->query("select * from  voucher");
@@ -95,20 +102,20 @@ class home
         $this->load->view("header");
         if (isset($_GET['id'])) {
             $xem["danhmuc"] = $this->db->query("select * from  danhmuc where parent_id = " . $_GET['id'] . "");
-            if(count($xem["danhmuc"])==0){
+            if (count($xem["danhmuc"]) == 0) {
                 $xem["danhmuc"] = $this->db->query("select * from  danhmuc where id = " . $_GET['id'] . "");
             }
-            foreach($xem["danhmuc"] as $k=>$v){
-                foreach($xem["voucher1"] as $ka=>$va){
-                    if($va['danhmuc_id'] == $v['id']){
+            foreach ($xem["danhmuc"] as $k => $v) {
+                foreach ($xem["voucher1"] as $ka => $va) {
+                    if ($va['danhmuc_id'] == $v['id']) {
                         $xem['voucher'][] = $va;
                     }
                 }
             }
             $this->load->view("bar", $xem);
         }
-        
-        if(isset($xem['voucher']))
+
+        if (isset($xem['voucher']))
             $this->load->view("main", $xem);
 
         $this->load->view("footer");
@@ -120,7 +127,7 @@ class home
         $this->load->view("bar", $xem);
 
         if (isset($_POST['tim'])) {
-            $n =trim($_POST['tim']);
+            $n = trim($_POST['tim']);
             $xem["voucher"] = $this->db->query("SELECT * FROM voucher WHERE `name`like'%$n%'");
             $this->load->view("main", $xem);
         }
