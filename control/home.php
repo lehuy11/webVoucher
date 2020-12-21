@@ -17,6 +17,7 @@ class home
         $this->load->view("main", $xem);
         $this->load->view("footer");
     }
+
     public function dangnhap()
     {
 
@@ -60,6 +61,32 @@ class home
         $this->load->view("header");
         $this->load->view("user");
         $this->load->view("lichsu");
+    }
+    
+    public function chitiet()
+    {
+        $xem["voucher"] = $this->db->query("select * from  voucher");
+        $this->load->view("header");
+        if (isset($_SESSION['id_danhmuc'])) {
+            unset($_SESSION['id_danhmuc']);
+        }
+
+        if (isset($_GET['id'])) {
+            foreach ($xem['voucher'] as $k => $v) {
+                if ($_GET['id'] == $v['id']) {
+                    $_SESSION['id_danhmuc'] = $v['danhmuc_id'];
+                }
+            }
+        }
+
+
+        if (isset($_SESSION['id_danhmuc'])) {
+            $xem["danhmuc"] = $this->db->query("select * from  danhmuc where id = " . $_SESSION['id_danhmuc'] . "");
+            $this->load->view("bar", $xem);
+        }
+
+
+        $this->load->view("chitiet", $xem);
         $this->load->view("footer");
     }
 
