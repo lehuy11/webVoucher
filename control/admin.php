@@ -26,7 +26,7 @@ class admin {
         $xem["voucher"] = $this->db->query("SELECT * from voucher");
         $this->load->view1("admin/header");
         $this->load->view1("admin/bar", $xem);
-        $this->load->view1("admin", $xem);
+        $this->load->view1("admin/dm", $xem);
         $this->load->view1("admin/footer");
     }
     public function voucher()
