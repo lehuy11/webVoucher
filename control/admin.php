@@ -19,11 +19,44 @@ class admin {
         $this->load->view1("admin/main");
         $this->load->view1("admin/footer"); 
     }
+    public function danhmuc()
+    {
+        $xem["danhmuc"] = $this->db->query("SELECT * from danhmuc where parent_id = 0");
+        $xem["voucher"] = $this->db->query("SELECT * from voucher");
+        $this->load->view1("admin/header");
+        $this->load->view1("admin/bar", $xem);
+        $this->load->view1("admin/dm", $xem);
+        $this->load->view1("admin/footer");
+    }
+    public function voucher()
+    {
+
+        $xem["voucher1"] = $this->db->query("select * from  voucher");
+        $this->load->view1("admin/header");
+
+        if (isset($_GET['id'])) {
+            $xem["danhmuc"] = $this->db->query("select * from  danhmuc where parent_id = " . $_GET['id'] . "");
+            if(count($xem["danhmuc"])==0){
+                $xem["danhmuc"] = $this->db->query("select * from  danhmuc where id = " . $_GET['id'] . "");
+            }
+            if(count($xem["danhmuc"])==0){
+                $xem["danhmuc"] = $this->db->query("select * from  danhmuc");
+            }
+            foreach($xem["danhmuc"] as $k=>$v){
+                foreach($xem["voucher1"] as $ka=>$va){
+                    if($va['danhmuc_id'] == $v['id']){
+                        $xem['voucher'][] = $va;
+                    }
+                }
+            }
+            $this->load->view1("admin/bar",$xem);
+
+        }
 
 }
 
 
 
-
+}
 
 ?>
