@@ -12,7 +12,6 @@ class admin {
     { 
         $xem["admin"] = $this->db->query("select * from admin");
         $this->load->view1("admin/login",$xem);  
-
     }
     public function main()
     {
