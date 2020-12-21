@@ -41,10 +41,13 @@ class Db extends PDO
 		}
 		return $con->execute();
 	}
-	// public function xoa()
-	// {
-		
-	// }
+	
+	public function xoa($table,$id,$tenid)
+	{ 
+		$sql = "DELETE FROM $table WHERE $tenid=$id ";
+		$con = $this->pdo->prepare($sql);
+		return $con->execute();
+	}
 
     public function query($sql, $param=array(), $mode = PDO::FETCH_ASSOC)
     {
