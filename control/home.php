@@ -135,4 +135,10 @@ class home
 
         $this->load->view("footer");
     }
+    public function gio()
+    {
+        $this->load->view("header");
+        $this->load->view("giohang");
+        $this->load->view("footer");
+    }
 }
