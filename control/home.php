@@ -89,5 +89,42 @@ class home
         $this->load->view("chitiet", $xem);
         $this->load->view("footer");
     }
+    public function dm()
+    {
+        $xem["voucher1"] = $this->db->query("select * from  voucher");
+        $this->load->view("header");
+        if (isset($_GET['id'])) {
+            $xem["danhmuc"] = $this->db->query("select * from  danhmuc where parent_id = " . $_GET['id'] . "");
+            if(count($xem["danhmuc"])==0){
+                $xem["danhmuc"] = $this->db->query("select * from  danhmuc where id = " . $_GET['id'] . "");
+            }
+            foreach($xem["danhmuc"] as $k=>$v){
+                foreach($xem["voucher1"] as $ka=>$va){
+                    if($va['danhmuc_id'] == $v['id']){
+                        $xem['voucher'][] = $va;
+                    }
+                }
+            }
+            $this->load->view("bar", $xem);
+        }
+        
+        if(isset($xem['voucher']))
+            $this->load->view("main", $xem);
 
+        $this->load->view("footer");
+    }
+    public function timkiem()
+    {
+        $this->load->view("header");
+        $xem["danhmuc"] = $this->db->query("SELECT * from danhmuc where parent_id = 0");
+        $this->load->view("bar", $xem);
+
+        if (isset($_POST['tim'])) {
+            $n =trim($_POST['tim']);
+            $xem["voucher"] = $this->db->query("SELECT * FROM voucher WHERE `name`like'%$n%'");
+            $this->load->view("main", $xem);
+        }
+
+        $this->load->view("footer");
+    }
 }
