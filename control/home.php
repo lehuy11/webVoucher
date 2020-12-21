@@ -17,5 +17,77 @@ class home
         $this->load->view("main", $xem);
         $this->load->view("footer");
     }
+
+    public function dangnhap()
+    {
+
+        unset($_SESSION['name']);
+
+        $xem["user"] = $this->db->query("select * from  user");
+
+        $this->load->view("header");
+        $this->load->view("login", $xem);
+        $this->load->view("footer");
+    }
+    public function dangky()
+    {
+
+        $xem["user"] = $this->db->query("select * from  user");
+        $this->load->view("header");
+        $this->load->view("dangky", $xem);
+        $this->load->view("footer");
+    }
+    public function user()
+    {
+        $xem["user"] = $this->db->query("select * from  user");
+        $check = true;
+        foreach ($xem["user"] as $k => $v) {
+            if ($_SESSION["name"] == $v['name']) {
+                $check = false;
+            }
+        }
+        if (isset($_SESSION["check"]) &&  $check == true) {
+            $created = date('Y/m/d H:i:s ', time());
+            $data  = array(
+                'name' => $_SESSION["name"],
+                'email' => $_SESSION["user_mail"],
+                'password' => $_SESSION["user_pass"],
+                'phone' => $_SESSION["user_phone"],
+                'address' => $_SESSION["user_ar"],
+                'created' => $created
+            );
+            $this->db->them("user", $data);
+        }
+        $this->load->view("header");
+        $this->load->view("user");
+        $this->load->view("lichsu");
+    }
     
+    public function chitiet()
+    {
+        $xem["voucher"] = $this->db->query("select * from  voucher");
+        $this->load->view("header");
+        if (isset($_SESSION['id_danhmuc'])) {
+            unset($_SESSION['id_danhmuc']);
+        }
+
+        if (isset($_GET['id'])) {
+            foreach ($xem['voucher'] as $k => $v) {
+                if ($_GET['id'] == $v['id']) {
+                    $_SESSION['id_danhmuc'] = $v['danhmuc_id'];
+                }
+            }
+        }
+
+
+        if (isset($_SESSION['id_danhmuc'])) {
+            $xem["danhmuc"] = $this->db->query("select * from  danhmuc where id = " . $_SESSION['id_danhmuc'] . "");
+            $this->load->view("bar", $xem);
+        }
+
+
+        $this->load->view("chitiet", $xem);
+        $this->load->view("footer");
+    }
+
 }
