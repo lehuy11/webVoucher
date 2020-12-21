@@ -52,11 +52,17 @@ class admin {
             $this->load->view1("admin/bar",$xem);
 
         }
+        
 
+        
+        $this->load->view1("admin/dm",$xem);
+        
+        $this->load->view1("admin/footer"); 
+    }
 }
 
 
 
-}
+
 
 ?>
