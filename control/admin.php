@@ -52,11 +52,17 @@ class admin {
             $this->load->view1("admin/bar",$xem);
 
         }
-        
-
-        
         $this->load->view1("admin/dm",$xem);
         
+        $this->load->view1("admin/footer"); 
+    }
+    
+    public function khach()
+    {
+        $this->load->view1("admin/header");
+        $xem["user"] = $this->db->query("select * from user");
+        $this->load->view1("admin/khach",$xem);
+
         $this->load->view1("admin/footer"); 
     }
 }
